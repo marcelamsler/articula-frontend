@@ -24,7 +24,6 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.articleService.getReads().subscribe((data) => {
-      console.log(data)
       this.reads = data;
       this.openRead(data[0].id)
     })

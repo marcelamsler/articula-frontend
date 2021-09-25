@@ -10,6 +10,7 @@ import {SentenceEvent} from './sentence-event';
 
 import {EventdataService} from "../eventdata.service";
 
+
 @Directive({
   selector: 'p, h1, h2, h3, h4'
 })
@@ -24,10 +25,8 @@ export class ParagraphDirective implements AfterViewInit {
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-      console.log(this.eventDataService.highlightData.length, "length")
-
       this.addSpanForEachSentence(this.eventDataService.highlightData);
-      if (this.eventDataService.installObserver()) {
+      if (this.eventDataService.isReadingMode()) {
         this.addObserverForAllCreatedSpans()
       }
     })
@@ -49,39 +48,45 @@ export class ParagraphDirective implements AfterViewInit {
       const sentenceId = this.eventDataService.sentenceNumber++;
       this.renderer.setAttribute(span, 'sentence-id', sentenceId.toString());
 
-      const sentenceToHighglight = highlightData.find(highlightedSentence => {
-        return highlightedSentence.sentenceId == sentenceId;
-      })
-      if (sentenceToHighglight) {
-        let score;
-        sentenceToHighglight.score = sentenceToHighglight.score * 100;
-        if (sentenceToHighglight) {
-          if (this.elRef.nativeElement.nodeName == "H1") {
-            score = Math.min(sentenceToHighglight.score * 3, 100)
-            console.log("upscaled score from ", sentenceToHighglight.score, " to ", score)
-          } else if (this.elRef.nativeElement.nodeName == "H2") {
-            score = Math.min(sentenceToHighglight.score * 2, 100)
-            console.log("upscaled score from ", sentenceToHighglight.score, " to ", score)
-          } else if (this.elRef.nativeElement.nodeName == "H3") {
-            score = Math.min(sentenceToHighglight.score * 1.5, 100)
-            console.log("upscaled score from ", sentenceToHighglight.score, " to ", score)
-          } else {
-            score = sentenceToHighglight.score;
-          }
-
-          this.renderer.setStyle(span, "background-image", this.heatMapColorforValue(score))
-          this.renderer.setStyle(span, "padding", "20px")
-          this.renderer.setStyle(span, "margin", "-20px")
-          this.renderer.setStyle(span, "border-radius", "40px")
-
-
-        }
+      if (!this.eventDataService.isReadingMode()) {
+        this.addHighlighting(highlightData, sentenceId, span);
       }
       const text = this.renderer.createText(sentence);
       this.renderer.appendChild(span, text)
       this.renderer.appendChild(paragraph, span)
     })
 
+  }
+
+  private addHighlighting(highlightData: any[], sentenceId: number, span: any) {
+    const sentenceToHighglight = highlightData.find(highlightedSentence => {
+      return highlightedSentence.sentenceId == sentenceId;
+    })
+
+    if (sentenceToHighglight) {
+      console.log("juhu")
+      let score;
+      sentenceToHighglight.score = sentenceToHighglight.score * 100;
+      if (sentenceToHighglight) {
+        if (this.elRef.nativeElement.nodeName == "H1") {
+          score = Math.min(sentenceToHighglight.score * 3, 100)
+          console.log("upscaled score from ", sentenceToHighglight.score, " to ", score)
+        } else if (this.elRef.nativeElement.nodeName == "H2") {
+          score = Math.min(sentenceToHighglight.score * 2, 100)
+          console.log("upscaled score from ", sentenceToHighglight.score, " to ", score)
+        } else if (this.elRef.nativeElement.nodeName == "H3") {
+          score = Math.min(sentenceToHighglight.score * 1.5, 100)
+          console.log("upscaled score from ", sentenceToHighglight.score, " to ", score)
+        } else {
+          score = sentenceToHighglight.score;
+        }
+
+        this.renderer.setStyle(span, "background-image", this.heatMapColorforValue(score))
+        this.renderer.setStyle(span, "padding", "20px")
+        this.renderer.setStyle(span, "margin", "-20px")
+        this.renderer.setStyle(span, "border-radius", "40px")
+      }
+    }
   }
 
   private addObserverForAllCreatedSpans() {

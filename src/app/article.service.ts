@@ -12,7 +12,7 @@ export class ArticleService {
   constructor(private http: HttpClient) { }
 
   sendRead(read: Read) {
-    return this.http.post<SentenceScore>(this.baseUrl + "/api/events/", read);
+    return this.http.post<SentenceScore>(this.baseUrl + "api/events/", read);
   }
   getReads() {
     return this.http.get<{id: string, articleUrl: string}[]>(this.baseUrl + "api/reads/")
