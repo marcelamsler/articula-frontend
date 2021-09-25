@@ -30,24 +30,6 @@ export class Article1Component implements OnInit, AfterViewInit, OnDestroy {
     this.paragraphs.forEach((elem) => console.log(elem.nativeElement.innerHTML))
   }
 
-  cleanupEndViewsAtBeginning(sorted_event_data: SentenceEvent[]) {
-    let firstViewEventIndex = 0
-    let foundStart = false
-
-    sorted_event_data.forEach((event, index) => {
-      if (event.type == "START_VIEW") {
-        firstViewEventIndex = index
-        foundStart = true
-      }
-    })
-
-    if (!foundStart) {
-      return [];
-    } else {
-      return sorted_event_data.slice(firstViewEventIndex)
-    }
-  }
-
   ngOnDestroy(): void {
     const read_id = UUID.UUID();
     const sorted_event_data = this.eventDataService.events.sort((event:SentenceEvent, event2:SentenceEvent) => {
@@ -58,8 +40,6 @@ export class Article1Component implements OnInit, AfterViewInit, OnDestroy {
         return timeDiff
       }
     });
-
-    //const cleaned_data = this.cleanupEndViewsAtBeginning(sorted_event_data)
 
     const read = new Read(read_id, sorted_event_data)
     console.log(JSON.stringify(read))
