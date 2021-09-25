@@ -3,9 +3,6 @@ import {
   Directive,
   ElementRef,
   HostBinding,
-  HostListener,
-  Inject, OnDestroy,
-  OnInit,
   Renderer2
 } from '@angular/core';
 

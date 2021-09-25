@@ -9,6 +9,7 @@ import {EventdataService} from "./eventdata.service";
   imports: [
     CommonModule
   ],
-  providers: [EventdataService]
+  providers: [EventdataService],
+  exports: [Article1Component]
 })
 export class ArticleModule { }

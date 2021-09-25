@@ -13,7 +13,7 @@ import { UUID } from 'angular2-uuid';
 import {SentenceEvent} from "../sentence-event";
 
 @Component({
-  selector: 'app-read-article',
+  selector: 'article1',
   templateUrl: './article1.component.html',
   styleUrls: ['./article1.component.scss']
 })
