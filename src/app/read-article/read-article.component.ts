@@ -5,10 +5,11 @@ import {
   OnDestroy,
   OnInit,
   QueryList,
-  Renderer2,
   ViewChildren
 } from '@angular/core';
 import {EventdataService} from "../eventdata.service";
+import {Read} from "../read";
+import { UUID } from 'angular2-uuid';
 
 @Component({
   selector: 'app-read-article',
@@ -29,6 +30,9 @@ export class ReadArticleComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log(JSON.stringify(this.eventData.events))
+    const read_id = UUID.UUID();
+    const read = new Read(read_id, this.eventData.events)
+    console.log(JSON.stringify(read))
+    this.eventData.events = []
   }
 }
