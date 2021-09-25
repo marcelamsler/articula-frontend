@@ -8,6 +8,7 @@ import {
 
 import {SentenceEvent} from './sentence-event';
 import {EventdataService} from "./eventdata.service";
+import {max} from "rxjs/operators";
 
 @Directive({
   selector: 'p, h1, h2, h3, h4'
@@ -29,7 +30,6 @@ export class ParagraphDirective implements AfterViewInit {
     }
   }
 
-
   private addSpanForEachSentence(highlightData: any[]) {
     const sentences = this.elRef.nativeElement.innerHTML.split(".")
 
@@ -48,14 +48,29 @@ export class ParagraphDirective implements AfterViewInit {
       const sentenceToHighglight = highlightData.find(highlightedSentence => {
         return highlightedSentence.sentenceId == sentenceId;
       })
-
       if (sentenceToHighglight) {
-        console.log("setting style")
-        this.renderer.setStyle(span, "background-image", this.heatMapColorforValue(sentenceToHighglight.score))
-        this.renderer.setStyle(span, "padding", "40px")
-        this.renderer.setStyle(span, "margin", "-40px")
-        this.renderer.setStyle(span, "border-radius", "40px")
+        let score;
+        sentenceToHighglight.score = sentenceToHighglight.score * 100;
+        if (sentenceToHighglight) {
+          console.log("setting style")
+          if (this.elRef.nativeElement == "H1") {
+            score = Math.max(sentenceToHighglight.score * 5, 100)
+          } else if (this.elRef.nativeElement == "H2") {
+            score = Math.max(sentenceToHighglight.score * 4, 100)
+            console.log("upscaled score")
+          } else if (this.elRef.nativeElement == "H3") {
+            score = Math.max(sentenceToHighglight.score * 3, 100)
+          } else {
+            score = sentenceToHighglight.score;
+          }
 
+          this.renderer.setStyle(span, "background-image", this.heatMapColorforValue(score))
+          this.renderer.setStyle(span, "padding", "40px")
+          this.renderer.setStyle(span, "margin", "-40px")
+          this.renderer.setStyle(span, "border-radius", "40px")
+
+
+        }
       }
       const text = this.renderer.createText(sentence);
       this.renderer.appendChild(span, text)
@@ -109,7 +124,7 @@ export class ParagraphDirective implements AfterViewInit {
   private heatMapColorforValue(value: number) {
     //const h = (1.0 - value / 100.0) * 240
     //return "hsl(" + h + ", 100%, 50%, 0.1)";
-    return "radial-gradient(rgb(0 255 19 / "+ value + "%), rgb(0 255 19 / "+ value/10 + "%))";
-   // return "rgb(0 255 19 / "+ value + "%)"
+    return "radial-gradient(rgb(0 255 19 / " + (value - 10) + "%), rgb(0 255 19 / " + value / 10 + "%))";
+    // return "rgb(0 255 19 / "+ value + "%)"
   }
 }
