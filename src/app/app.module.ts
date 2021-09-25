@@ -5,17 +5,21 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {AdminComponent} from './admin/admin.component';
 import {ArticleModule} from "./article/article.module";
+import {HttpClientModule} from "@angular/common/http";
+import { RerenderDirective } from './rerender.directive';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    AdminComponent
+    AdminComponent,
+    RerenderDirective
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ArticleModule
+    ArticleModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

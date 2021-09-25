@@ -3,11 +3,11 @@ import {SentenceEvent} from "./sentence-event";
 export class Read {
   id: string;
   events: SentenceEvent[] = []
-  private articleId: number;
+  private articleUrl: string;
 
   constructor(id: string, events: SentenceEvent[]) {
     this.id = id;
-    this.articleId = 1
+    this.articleUrl = "article1"
     this.events = events;
   }
 }

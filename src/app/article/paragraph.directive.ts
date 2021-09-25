@@ -23,9 +23,9 @@ export class ParagraphDirective implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    console.log(this.eventDataService.highlightData)
+    console.log(this.eventDataService.highlightData.length, "length")
     this.addSpanForEachSentence(this.eventDataService.highlightData);
-    if (this.eventDataService.installObserver) {
+    if (this.eventDataService.installObserver()) {
       this.addObserverForAllCreatedSpans()
     }
   }
@@ -52,21 +52,22 @@ export class ParagraphDirective implements AfterViewInit {
         let score;
         sentenceToHighglight.score = sentenceToHighglight.score * 100;
         if (sentenceToHighglight) {
-          console.log("setting style")
-          if (this.elRef.nativeElement == "H1") {
-            score = Math.max(sentenceToHighglight.score * 5, 100)
-          } else if (this.elRef.nativeElement == "H2") {
-            score = Math.max(sentenceToHighglight.score * 4, 100)
-            console.log("upscaled score")
-          } else if (this.elRef.nativeElement == "H3") {
-            score = Math.max(sentenceToHighglight.score * 3, 100)
+          if (this.elRef.nativeElement.nodeName == "H1") {
+            score = Math.min(sentenceToHighglight.score * 3, 100)
+            console.log("upscaled score from ", sentenceToHighglight.score, " to ", score )
+          } else if (this.elRef.nativeElement.nodeName == "H2") {
+            score = Math.min(sentenceToHighglight.score * 2, 100)
+            console.log("upscaled score from ", sentenceToHighglight.score, " to ", score )
+          } else if (this.elRef.nativeElement.nodeName == "H3") {
+            score = Math.min(sentenceToHighglight.score * 1.5, 100)
+            console.log("upscaled score from ", sentenceToHighglight.score, " to ", score )
           } else {
             score = sentenceToHighglight.score;
           }
 
           this.renderer.setStyle(span, "background-image", this.heatMapColorforValue(score))
-          this.renderer.setStyle(span, "padding", "40px")
-          this.renderer.setStyle(span, "margin", "-40px")
+          this.renderer.setStyle(span, "padding", "20px")
+          this.renderer.setStyle(span, "margin", "-20px")
           this.renderer.setStyle(span, "border-radius", "40px")
 
 
@@ -112,7 +113,6 @@ export class ParagraphDirective implements AfterViewInit {
         eventType = "END_VIEW"
       }
       if (this.firstStartEventReceived) {
-        console.log(eventType)
         const event = new SentenceEvent(sentenceId, element.textContent || "", "paragraph", entry.time, eventType)
         this.eventDataService.events.push(event)
       }

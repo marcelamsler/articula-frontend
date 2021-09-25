@@ -11,6 +11,7 @@ import {EventdataService} from "../eventdata.service";
 import {Read} from "../read";
 import {UUID} from 'angular2-uuid';
 import {SentenceEvent} from "../sentence-event";
+import {ArticleService} from "../../article.service";
 
 @Component({
   selector: 'article1',
@@ -20,22 +21,16 @@ import {SentenceEvent} from "../sentence-event";
 export class Article1Component implements OnInit, AfterViewInit, OnDestroy {
   @ViewChildren(HTMLParagraphElement) paragraphs: QueryList<ElementRef> = new QueryList<ElementRef>();
 
-  @Input()
-  public highlightData: any[] = [];
-
-  constructor(private eventDataService: EventdataService) {
+  constructor(private eventDataService: EventdataService, private articleService: ArticleService) {
 
   }
 
   ngOnInit(): void {
-    const installObserver = !this.highlightData.length;
-    console.log("set install observer to: " + installObserver)
-    this.eventDataService.installObserver = installObserver;
-    this.eventDataService.highlightData = this.highlightData;
+    console.log("set install observer to: " + this.eventDataService.installObserver())
   }
 
   ngAfterViewInit() {
-    this.paragraphs.forEach((elem) => console.log(elem.nativeElement.innerHTML))
+
   }
 
   ngOnDestroy(): void {
@@ -54,6 +49,7 @@ export class Article1Component implements OnInit, AfterViewInit, OnDestroy {
     })
 
     const read = new Read(read_id, cleared_data)
+    this.articleService.sendRead(read);
     console.log(JSON.stringify(read))
     //read.events.forEach(value => {
     //console.log(value.sentence, value.type)

@@ -13,5 +13,4 @@ export class SentenceEvent {
     this.time = time;
     this.type = type;
   }
-
 }

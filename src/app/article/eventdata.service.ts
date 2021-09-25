@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, Predicate} from '@angular/core';
 import {SentenceEvent} from "./sentence-event";
 
 @Injectable({
@@ -6,13 +6,15 @@ import {SentenceEvent} from "./sentence-event";
 })
 export class EventdataService {
   public sentenceNumber: number = 0;
-  public installObserver: boolean = true;
   public events: SentenceEvent[] = []
   public highlightData: any[] = [];
 
   constructor() {
   }
 
+  installObserver() {
+    return !this.highlightData.length
+  }
   clearData() {
     this.events = []
     this.sentenceNumber = 0;
