@@ -63,6 +63,9 @@ export class ParagraphDirective implements AfterViewInit {
       return highlightedSentence.sentenceId == sentenceId;
     })
 
+    console.log(sentenceId)
+    console.log(highlightData)
+
     if (sentenceToHighglight) {
       console.log("juhu")
       let score;

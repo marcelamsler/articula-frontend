@@ -1,9 +1,7 @@
 import {
   AfterViewInit,
   Component,
-  ElementRef, Input,
-  OnDestroy,
-  OnInit,
+  ElementRef, OnInit,
   QueryList,
   ViewChildren
 } from '@angular/core';
@@ -22,24 +20,26 @@ import {EventdataService} from "../../eventdata.service";
 export class Article1Component implements OnInit, AfterViewInit {
   @ViewChildren(HTMLParagraphElement) paragraphs: QueryList<ElementRef> = new QueryList<ElementRef>();
 
+  private startTime: number = 0;
+
   constructor(private eventDataService: EventdataService, private articleService: ArticleService) {
 
   }
 
   ngOnInit(): void {
     console.log("set install observer to: " + this.eventDataService.isReadingMode())
-    if (this.eventDataService.isReadingMode()) {
-      this.eventDataService.clearData()
-    }
+    this.eventDataService.clearData()
   }
 
   ngAfterViewInit() {
-
+    this.startTime = new Date().getTime();
   }
 
   sendRequest(): void {
     console.log("is reading mode? ", this.eventDataService.isReadingMode())
     if (this.eventDataService.isReadingMode()) {
+      const endTime = new Date().getTime();
+      const totalTimeMillis = endTime - this.startTime;
       const read_id = UUID.UUID();
       const sorted_event_data = this.eventDataService.events.sort((event: SentenceEvent, event2: SentenceEvent) => {
         const timeDiff = event.time - event2.time
@@ -54,12 +54,13 @@ export class Article1Component implements OnInit, AfterViewInit {
         return event.sentence != "&nbsp;" && event.sentence
       })
 
-      const read = new Read(read_id, cleared_data)
 
-      this.articleService.sendRead(read).subscribe(()=> {
-        console.log(read)
+      const read = new Read(read_id, cleared_data, totalTimeMillis)
+
+
+      this.articleService.sendRead(read).subscribe(() => {
+        console.log("data-sent")
       });
-      console.log(read)
       //read.events.forEach(value => {
       //console.log(value.sentence, value.type)
       //})

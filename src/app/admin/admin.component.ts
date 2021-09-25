@@ -12,6 +12,7 @@ import {EventdataService} from "../eventdata.service";
 export class AdminComponent implements OnInit {
   highlightData: SentenceScore[] = [];
   reads: any[] = []
+  currentRead: string = ""
 
   constructor(private eventDataService: EventdataService, private articleService: ArticleService) {
 
@@ -30,6 +31,7 @@ export class AdminComponent implements OnInit {
   }
 
   openRead(id: string) {
+    this.currentRead = id;
     this.articleService.getSentenceScores(id).subscribe((data) => {
       this.eventDataService.highlightData = data;
       this.highlightData = [];
