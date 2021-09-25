@@ -27,7 +27,7 @@ export class Article1Component implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    console.log("set install observer to: " + this.eventDataService.isReadingMode())
+    console.log("reading mode is: " + this.eventDataService.isReadingMode())
     this.eventDataService.clearData()
   }
 
