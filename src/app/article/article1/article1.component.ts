@@ -58,6 +58,7 @@ export class Article1Component implements OnInit, AfterViewInit {
 
       this.articleService.sendRead(read).subscribe(() => {
         console.log("data-sent")
+        this.eventDataService.clearData()
       });
       //read.events.forEach(value => {
       //console.log(value.sentence, value.type)
