@@ -7,11 +7,12 @@ import {
   QueryList,
   ViewChildren
 } from '@angular/core';
-import {EventdataService} from "../eventdata.service";
+
 import {Read} from "../read";
 import {UUID} from 'angular2-uuid';
 import {SentenceEvent} from "../sentence-event";
 import {ArticleService} from "../../article.service";
+import {EventdataService} from "../../eventdata.service";
 
 @Component({
   selector: 'article1',

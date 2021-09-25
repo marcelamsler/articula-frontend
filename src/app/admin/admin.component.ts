@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {EventdataService} from "../article/eventdata.service";
+
 import {ArticleService} from "../article.service";
 import {SentenceScore} from "./SentenceScore";
+import {EventdataService} from "../eventdata.service";
 
 @Component({
   selector: 'app-admin',
@@ -25,13 +26,15 @@ export class AdminComponent implements OnInit {
     this.articleService.getReads().subscribe((data) => {
       console.log(data)
       this.reads = data;
+      this.openRead(data[0].id)
     })
   }
 
   openRead(id: string) {
     this.articleService.getSentenceScores(id).subscribe((data) => {
-      console.log("setting highlight data to", data)
       this.eventDataService.highlightData = data;
+      this.highlightData = [];
+      this.highlightData = this.eventDataService.highlightData;
     })
   }
 }

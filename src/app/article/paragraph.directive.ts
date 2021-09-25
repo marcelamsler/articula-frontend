@@ -7,8 +7,8 @@ import {
 } from '@angular/core';
 
 import {SentenceEvent} from './sentence-event';
-import {EventdataService} from "./eventdata.service";
-import {max} from "rxjs/operators";
+
+import {EventdataService} from "../eventdata.service";
 
 @Directive({
   selector: 'p, h1, h2, h3, h4'
@@ -23,11 +23,15 @@ export class ParagraphDirective implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    console.log(this.eventDataService.highlightData.length, "length")
-    this.addSpanForEachSentence(this.eventDataService.highlightData);
-    if (this.eventDataService.installObserver()) {
-      this.addObserverForAllCreatedSpans()
-    }
+    setTimeout(() => {
+      console.log(this.eventDataService.highlightData.length, "length")
+
+      this.addSpanForEachSentence(this.eventDataService.highlightData);
+      if (this.eventDataService.installObserver()) {
+        this.addObserverForAllCreatedSpans()
+      }
+    })
+
   }
 
   private addSpanForEachSentence(highlightData: any[]) {
@@ -54,13 +58,13 @@ export class ParagraphDirective implements AfterViewInit {
         if (sentenceToHighglight) {
           if (this.elRef.nativeElement.nodeName == "H1") {
             score = Math.min(sentenceToHighglight.score * 3, 100)
-            console.log("upscaled score from ", sentenceToHighglight.score, " to ", score )
+            console.log("upscaled score from ", sentenceToHighglight.score, " to ", score)
           } else if (this.elRef.nativeElement.nodeName == "H2") {
             score = Math.min(sentenceToHighglight.score * 2, 100)
-            console.log("upscaled score from ", sentenceToHighglight.score, " to ", score )
+            console.log("upscaled score from ", sentenceToHighglight.score, " to ", score)
           } else if (this.elRef.nativeElement.nodeName == "H3") {
             score = Math.min(sentenceToHighglight.score * 1.5, 100)
-            console.log("upscaled score from ", sentenceToHighglight.score, " to ", score )
+            console.log("upscaled score from ", sentenceToHighglight.score, " to ", score)
           } else {
             score = sentenceToHighglight.score;
           }
