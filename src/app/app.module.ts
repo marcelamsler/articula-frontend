@@ -6,6 +6,7 @@ import {AppComponent} from './app.component';
 import {ReadArticleComponent} from './read-article/read-article.component';
 import {AdminComponent} from './admin/admin.component';
 import {ParagraphDirective} from './paragraph.directive';
+import {EventdataService} from "./eventdata.service";
 
 
 @NgModule({
@@ -19,7 +20,7 @@ import {ParagraphDirective} from './paragraph.directive';
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [EventdataService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

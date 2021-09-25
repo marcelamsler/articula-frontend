@@ -1,14 +1,24 @@
-import {AfterViewInit, Component, ElementRef, OnInit, QueryList, Renderer2, ViewChildren} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  Renderer2,
+  ViewChildren
+} from '@angular/core';
+import {EventdataService} from "../eventdata.service";
 
 @Component({
   selector: 'app-read-article',
   templateUrl: './read-article.component.html',
   styleUrls: ['./read-article.component.scss']
 })
-export class ReadArticleComponent implements OnInit, AfterViewInit {
+export class ReadArticleComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChildren(HTMLParagraphElement) paragraphs: QueryList<ElementRef> = new QueryList<ElementRef>();
 
-  constructor(private renderer: Renderer2) {
+  constructor(private eventData: EventdataService) {
   }
 
   ngOnInit(): void {
@@ -16,5 +26,9 @@ export class ReadArticleComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit(){
     this.paragraphs.forEach((elem) => console.log(elem.nativeElement.innerHTML))
+  }
+
+  ngOnDestroy(): void {
+    console.log(JSON.stringify(this.eventData.events))
   }
 }

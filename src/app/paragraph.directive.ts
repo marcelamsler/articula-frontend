@@ -6,29 +6,25 @@ import {
   HostListener,
   Inject, OnDestroy,
   OnInit,
-  Renderer2,
+  Renderer2
 } from '@angular/core';
-import {DOCUMENT} from "@angular/common";
+
 import {SentenceEvent} from './sentence-event';
+import {EventdataService} from "./eventdata.service";
 
 @Directive({
   selector: 'p, h1, h2, h3, h4'
 })
-export class ParagraphDirective implements OnInit, OnDestroy {
+export class ParagraphDirective implements OnInit {
   @HostBinding('class')
   elementClass = 'paragraph';
-  private events: SentenceEvent[] = []
 
-  constructor(private elRef: ElementRef, private renderer: Renderer2, @Inject(DOCUMENT) private document: Document) {
+  constructor(private elRef: ElementRef, private renderer: Renderer2, private eventData: EventdataService) {
 
   }
 
   ngOnInit() {
     this.addSpanForEachSentence();
-  }
-
-  ngOnDestroy() {
-    console.log(this.events)
   }
 
   private addVisibilityObserver(element: Element) {
@@ -54,8 +50,7 @@ export class ParagraphDirective implements OnInit, OnDestroy {
       }
       debugger;
       const event = new SentenceEvent(sentenceId, element.textContent || "", "paragraph", entry.time, event_type)
-      console.log("push events")
-      this.events.push(event)
+      this.eventData.events.push(event)
     })
   }
 
