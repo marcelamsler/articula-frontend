@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { ReadArticleComponent } from './read-article/read-article.component';
 import { AdminComponent } from './admin/admin.component';
 import { ParagraphDirective } from './paragraph.directive';
+import { VisibilityDirective } from './visibility.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     ReadArticleComponent,
     AdminComponent,
-    ParagraphDirective
+    ParagraphDirective,
+    VisibilityDirective
   ],
   imports: [
     BrowserModule,
