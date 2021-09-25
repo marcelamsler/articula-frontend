@@ -9,7 +9,7 @@ export class Read {
   constructor(id: string, events: SentenceEvent[], totalTimeMillis: number) {
     this.id = id;
     this.totalTimeMillis = totalTimeMillis;
-    this.articleUrl = "article1"
+    this.articleUrl = "Artikel - Preiskampf Schnelltests"
     this.events = events;
   }
 }

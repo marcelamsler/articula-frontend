@@ -81,8 +81,8 @@ export class ParagraphDirective implements AfterViewInit {
         }
 
         this.renderer.setStyle(span, "background-image", this.heatMapColorforValue(score))
-        this.renderer.setStyle(span, "padding", "20px")
-        this.renderer.setStyle(span, "margin", "-20px")
+        this.renderer.setStyle(span, "padding", "10px")
+        this.renderer.setStyle(span, "margin", "-10px")
         this.renderer.setStyle(span, "border-radius", "40px")
       }
     }
@@ -102,7 +102,8 @@ export class ParagraphDirective implements AfterViewInit {
   private addVisibilityObserver(element: Element) {
     const observer = new IntersectionObserver((entries, opts) => this.onIntersection(entries, opts), {
       root: null,   // default is the viewport
-      threshold: .5 // percentage of targets visible area. Triggers "onIntersection"
+      rootMargin: "0px 0px -30% 0px",
+      threshold: .9 // percentage of targets visible area. Triggers "onIntersection"
     })
 
     observer.observe(element)
@@ -132,7 +133,7 @@ export class ParagraphDirective implements AfterViewInit {
   private heatMapColorforValue(value: number) {
     //const h = (1.0 - value / 100.0) * 240
     //return "hsl(" + h + ", 100%, 50%, 0.1)";
-    return "radial-gradient(rgb(0 255 19 / " + (value - 10) + "%), rgb(0 255 19 / " + value / 10 + "%))";
+    return "radial-gradient(rgb(0 255 19 / " + value + "%), rgb(0 255 19 / " + value / 10 + "%))";
     // return "rgb(0 255 19 / "+ value + "%)"
   }
 }
