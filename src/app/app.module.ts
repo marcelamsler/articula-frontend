@@ -1,20 +1,19 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { ReadArticleComponent } from './read-article/read-article.component';
-import { AdminComponent } from './admin/admin.component';
-import { ParagraphDirective } from './paragraph.directive';
-import { VisibilityDirective } from './visibility.directive';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {ReadArticleComponent} from './read-article/read-article.component';
+import {AdminComponent} from './admin/admin.component';
+import {ParagraphDirective} from './paragraph.directive';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     ReadArticleComponent,
     AdminComponent,
-    ParagraphDirective,
-    VisibilityDirective
+    ParagraphDirective
   ],
   imports: [
     BrowserModule,
@@ -23,4 +22,5 @@ import { VisibilityDirective } from './visibility.directive';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
