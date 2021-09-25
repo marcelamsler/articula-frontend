@@ -5,12 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ReadArticleComponent } from './read-article/read-article.component';
 import { AdminComponent } from './admin/admin.component';
+import { ParagraphDirective } from './paragraph.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     ReadArticleComponent,
-    AdminComponent
+    AdminComponent,
+    ParagraphDirective
   ],
   imports: [
     BrowserModule,
