@@ -8,6 +8,7 @@ export class EventdataService {
   public sentenceNumber: number = 0;
   public installObserver: boolean = true;
   public events: SentenceEvent[] = []
+  public highlightData: any[] = [];
 
   constructor() {
   }
@@ -15,5 +16,6 @@ export class EventdataService {
   clearData() {
     this.events = []
     this.sentenceNumber = 0;
+    this.highlightData = [];
   }
 }

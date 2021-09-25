@@ -31,6 +31,7 @@ export class Article1Component implements OnInit, AfterViewInit, OnDestroy {
     const installObserver = !this.highlightData.length;
     console.log("set install observer to: " + installObserver)
     this.eventDataService.installObserver = installObserver;
+    this.eventDataService.highlightData = this.highlightData;
   }
   ngAfterViewInit(){
     this.paragraphs.forEach((elem) => console.log(elem.nativeElement.innerHTML))

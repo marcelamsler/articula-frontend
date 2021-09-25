@@ -22,14 +22,15 @@ export class ParagraphDirective implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.addSpanForEachSentence();
+    console.log(this.eventDataService.highlightData)
+    this.addSpanForEachSentence(this.eventDataService.highlightData);
     if (this.eventDataService.installObserver) {
       this.addObserverForAllCreatedSpans()
     }
   }
 
 
-  private addSpanForEachSentence() {
+  private addSpanForEachSentence(highlightData: any[]) {
     const sentences = this.elRef.nativeElement.innerHTML.split(".")
 
     this.elRef.nativeElement.childNodes.forEach((node: any) => {
@@ -43,6 +44,15 @@ export class ParagraphDirective implements AfterViewInit {
 
       const sentenceId = this.eventDataService.sentenceNumber++;
       this.renderer.setAttribute(span, 'sentence-id', sentenceId.toString());
+
+      const sentenceToHighglight = highlightData.find(highlightedSentence => {
+        return highlightedSentence.sentenceId == sentenceId;
+      })
+
+      if (sentenceToHighglight) {
+        console.log("setting style")
+        this.renderer.setStyle(span, "background-color", this.heatMapColorforValue(sentenceToHighglight.score))
+      }
       const text = this.renderer.createText(sentence);
       this.renderer.appendChild(span, text)
       this.renderer.appendChild(paragraph, span)
@@ -91,4 +101,10 @@ export class ParagraphDirective implements AfterViewInit {
     })
   }
 
+
+  private heatMapColorforValue(value: number) {
+    //const h = (1.0 - value / 100.0) * 240
+    //return "hsl(" + h + ", 100%, 50%, 0.1)";
+    return "rgb(0 255 19 / "+ value + "%)"
+  }
 }
