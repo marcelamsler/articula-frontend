@@ -1,7 +1,7 @@
 import {
   AfterViewInit,
   Component,
-  ElementRef,
+  ElementRef, Input,
   OnDestroy,
   OnInit,
   QueryList,
@@ -20,11 +20,17 @@ import {SentenceEvent} from "../sentence-event";
 export class Article1Component implements OnInit, AfterViewInit, OnDestroy {
   @ViewChildren(HTMLParagraphElement) paragraphs: QueryList<ElementRef> = new QueryList<ElementRef>();
 
+  @Input()
+  public highlightData: any[] = [];
+
   constructor(private eventDataService: EventdataService) {
+
   }
 
   ngOnInit(): void {
-
+    const installObserver = !this.highlightData.length;
+    console.log("set install observer to: " + installObserver)
+    this.eventDataService.installObserver = installObserver;
   }
   ngAfterViewInit(){
     this.paragraphs.forEach((elem) => console.log(elem.nativeElement.innerHTML))

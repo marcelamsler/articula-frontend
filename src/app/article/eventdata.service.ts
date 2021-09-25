@@ -6,7 +6,7 @@ import {SentenceEvent} from "./sentence-event";
 })
 export class EventdataService {
   public sentenceNumber: number = 0;
-
+  public installObserver: boolean = true;
   public events: SentenceEvent[] = []
 
   constructor() {

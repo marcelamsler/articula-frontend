@@ -17,13 +17,15 @@ export class ParagraphDirective implements AfterViewInit {
   elementClass = 'paragraph';
   private firstStartEventReceived: boolean = false;
 
-  constructor(private elRef: ElementRef, private renderer: Renderer2, private eventData: EventdataService) {
+  constructor(private elRef: ElementRef, private renderer: Renderer2, private eventDataService: EventdataService) {
 
   }
 
   ngAfterViewInit(): void {
     this.addSpanForEachSentence();
-    this.addObserverForAllCreatedSpans();
+    if (this.eventDataService.installObserver) {
+      this.addObserverForAllCreatedSpans()
+    }
   }
 
 
@@ -39,7 +41,7 @@ export class ParagraphDirective implements AfterViewInit {
     sentences.forEach((sentence: string) => {
       const span = this.renderer.createElement('span');
 
-      const sentenceId = this.eventData.sentenceNumber++;
+      const sentenceId = this.eventDataService.sentenceNumber++;
       this.renderer.setAttribute(span, 'sentence-id', sentenceId.toString());
       const text = this.renderer.createText(sentence);
       this.renderer.appendChild(span, text)
@@ -83,7 +85,7 @@ export class ParagraphDirective implements AfterViewInit {
       if (this.firstStartEventReceived) {
         console.log(eventType)
         const event = new SentenceEvent(sentenceId, element.textContent || "", "paragraph", entry.time, eventType)
-        this.eventData.events.push(event)
+        this.eventDataService.events.push(event)
       }
 
     })

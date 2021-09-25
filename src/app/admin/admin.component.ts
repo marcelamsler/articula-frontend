@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {EventdataService} from "../article/eventdata.service";
 
 @Component({
   selector: 'app-admin',
@@ -6,10 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
+  highlightData: any[] = [{value: "key"}];
 
-  constructor() { }
+  constructor( private eventDataService: EventdataService) {
+    eventDataService.installObserver = true;
+  }
 
   ngOnInit(): void {
+
   }
 
 }
