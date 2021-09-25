@@ -54,9 +54,7 @@ export class Article1Component implements OnInit, AfterViewInit {
         return event.sentence != "&nbsp;" && event.sentence
       })
 
-
-      const read = new Read(read_id, cleared_data, totalTimeMillis)
-
+      const read = new Read(read_id, cleared_data, totalTimeMillis, this.eventDataService.totalSentenceCount)
 
       this.articleService.sendRead(read).subscribe(() => {
         console.log("data-sent")

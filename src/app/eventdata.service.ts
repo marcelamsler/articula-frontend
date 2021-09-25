@@ -7,6 +7,8 @@ import {Router} from "@angular/router";
   providedIn: 'root'
 })
 export class EventdataService {
+  public totalSentenceCount: number = 0;
+
   get highlightData(): any[] {
     return this._highlightData;
   }
@@ -28,5 +30,6 @@ export class EventdataService {
   clearData() {
     this.events = []
     this.sentenceNumber = 0;
+    this.totalSentenceCount = 0;
   }
 }

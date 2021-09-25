@@ -2,7 +2,7 @@
   <div class="p-10">
     <h2>Reads</h2>
     <ul>
-      <li *ngFor="let read of reads"  [ngClass]="{'bg-blue-600 text-gray-200': currentRead == read.id}" class="border list-none rounded-sm px-3 py-3 w-0.5" (click)="openRead(read.id)">
+      <li *ngFor="let read of reads"  [ngClass]="{'bg-blue-600 text-gray-200': currentRead == read.id}" class="border list-none rounded-sm px-3 py-3 w-8/12" (click)="openRead(read.id)">
         {{ read.title }}
       </li>
     </ul>

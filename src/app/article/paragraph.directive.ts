@@ -42,7 +42,8 @@ export class ParagraphDirective implements AfterViewInit {
 
     const paragraph = this.renderer.createElement('p');
     this.renderer.appendChild(this.elRef.nativeElement, paragraph)
-    sentences.forEach((sentence: string) => {
+    this.eventDataService.totalSentenceCount += sentences.length
+    sentences.forEach((sentence: string, index:number) => {
       const span = this.renderer.createElement('span');
 
       const sentenceId = this.eventDataService.sentenceNumber++;
@@ -51,7 +52,14 @@ export class ParagraphDirective implements AfterViewInit {
       if (!this.eventDataService.isReadingMode()) {
         this.addHighlighting(highlightData, sentenceId, span);
       }
-      const text = this.renderer.createText(sentence);
+
+      let text;
+      if (index == sentences.length -1) {
+        text = this.renderer.createText(sentence);
+      } else {
+        text = this.renderer.createText(sentence + ".");
+      }
+
       this.renderer.appendChild(span, text)
       this.renderer.appendChild(paragraph, span)
     })
