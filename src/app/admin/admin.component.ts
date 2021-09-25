@@ -12,7 +12,7 @@ export class AdminComponent implements OnInit {
   constructor( private eventDataService: EventdataService) {
     eventDataService.installObserver = true;
 
-    this.highlightData = [{sentenceId: 0, score: 80}, {sentenceId: 3, score: 40}, {sentenceId: 19, score: 20} ]
+    this.highlightData = [{sentenceId: 0, score: 100}, {sentenceId: 3, score: 40}, {sentenceId: 19, score: 20} ]
   }
 
   ngOnInit(): void {

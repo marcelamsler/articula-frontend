@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import {EventdataService} from "../eventdata.service";
 import {Read} from "../read";
-import { UUID } from 'angular2-uuid';
+import {UUID} from 'angular2-uuid';
 import {SentenceEvent} from "../sentence-event";
 
 @Component({
@@ -33,14 +33,15 @@ export class Article1Component implements OnInit, AfterViewInit, OnDestroy {
     this.eventDataService.installObserver = installObserver;
     this.eventDataService.highlightData = this.highlightData;
   }
-  ngAfterViewInit(){
+
+  ngAfterViewInit() {
     this.paragraphs.forEach((elem) => console.log(elem.nativeElement.innerHTML))
   }
 
   ngOnDestroy(): void {
     const read_id = UUID.UUID();
-    const sorted_event_data = this.eventDataService.events.sort((event:SentenceEvent, event2:SentenceEvent) => {
-      const timeDiff =  event.time - event2.time
+    const sorted_event_data = this.eventDataService.events.sort((event: SentenceEvent, event2: SentenceEvent) => {
+      const timeDiff = event.time - event2.time
       if (timeDiff == 0) {
         return event.sentenceId - event2.sentenceId
       } else {
@@ -48,10 +49,14 @@ export class Article1Component implements OnInit, AfterViewInit, OnDestroy {
       }
     });
 
-    const read = new Read(read_id, sorted_event_data)
+    const cleared_data = sorted_event_data.filter(event => {
+      return event.sentence != "&nbsp;" && event.sentence
+    })
+
+    const read = new Read(read_id, cleared_data)
     console.log(JSON.stringify(read))
     //read.events.forEach(value => {
-      //console.log(value.sentence, value.type)
+    //console.log(value.sentence, value.type)
     //})
     this.eventDataService.clearData()
   }

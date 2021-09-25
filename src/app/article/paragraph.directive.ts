@@ -51,7 +51,11 @@ export class ParagraphDirective implements AfterViewInit {
 
       if (sentenceToHighglight) {
         console.log("setting style")
-        this.renderer.setStyle(span, "background-color", this.heatMapColorforValue(sentenceToHighglight.score))
+        this.renderer.setStyle(span, "background-image", this.heatMapColorforValue(sentenceToHighglight.score))
+        this.renderer.setStyle(span, "padding", "40px")
+        this.renderer.setStyle(span, "margin", "-40px")
+        this.renderer.setStyle(span, "border-radius", "40px")
+
       }
       const text = this.renderer.createText(sentence);
       this.renderer.appendChild(span, text)
@@ -105,6 +109,7 @@ export class ParagraphDirective implements AfterViewInit {
   private heatMapColorforValue(value: number) {
     //const h = (1.0 - value / 100.0) * 240
     //return "hsl(" + h + ", 100%, 50%, 0.1)";
-    return "rgb(0 255 19 / "+ value + "%)"
+    return "radial-gradient(rgb(0 255 19 / "+ value + "%), rgb(0 255 19 / "+ value/10 + "%))";
+   // return "rgb(0 255 19 / "+ value + "%)"
   }
 }
