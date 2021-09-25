@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {ReadArticleComponent} from "./read-article/read-article.component";
 import {AdminComponent} from "./admin/admin.component";
+import {Article1Component} from "./article/article1/article1.component";
 
 const routes: Routes = [
-  { path: 'read-article', component: ReadArticleComponent },
+  { path: 'article1', component: Article1Component },
   { path: 'admin', component: AdminComponent },
 ];
 

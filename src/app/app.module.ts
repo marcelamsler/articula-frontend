@@ -3,24 +3,21 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {ReadArticleComponent} from './read-article/read-article.component';
 import {AdminComponent} from './admin/admin.component';
-import {ParagraphDirective} from './paragraph.directive';
-import {EventdataService} from "./eventdata.service";
+import {ArticleModule} from "./article/article.module";
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ReadArticleComponent,
-    AdminComponent,
-    ParagraphDirective
+    AdminComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ArticleModule
   ],
-  providers: [EventdataService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {

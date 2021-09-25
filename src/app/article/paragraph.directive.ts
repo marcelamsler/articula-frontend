@@ -15,15 +15,16 @@ import {EventdataService} from "./eventdata.service";
 @Directive({
   selector: 'p, h1, h2, h3, h4'
 })
-export class ParagraphDirective implements OnInit {
+export class ParagraphDirective implements AfterViewInit {
   @HostBinding('class')
   elementClass = 'paragraph';
+  private firstStartEventReceived: boolean = false;
 
   constructor(private elRef: ElementRef, private renderer: Renderer2, private eventData: EventdataService) {
 
   }
 
-  ngOnInit() {
+  ngAfterViewInit(): void {
     this.addSpanForEachSentence();
     this.addObserverForAllCreatedSpans();
   }
@@ -64,7 +65,7 @@ export class ParagraphDirective implements OnInit {
   private addVisibilityObserver(element: Element) {
     const observer = new IntersectionObserver((entries, opts) => this.onIntersection(entries, opts), {
       root: null,   // default is the viewport
-      threshold: .9 // percentage of targets visible area. Triggers "onIntersection"
+      threshold: .5 // percentage of targets visible area. Triggers "onIntersection"
     })
 
     observer.observe(element)
@@ -74,17 +75,20 @@ export class ParagraphDirective implements OnInit {
 
     entries.forEach((entry: IntersectionObserverEntry) => {
       const element = entry.target;
-
       const sentenceId = parseInt(element.getAttribute('sentence-id') || "9999999")
-      let event_type: "START_VIEW" | "END_VIEW";
+      let eventType: "START_VIEW" | "END_VIEW";
       if (entry.isIntersecting) {
-        event_type = "START_VIEW"
+        eventType = "START_VIEW"
+        this.firstStartEventReceived = true
       } else {
-        event_type = "END_VIEW"
+        eventType = "END_VIEW"
       }
-      debugger;
-      const event = new SentenceEvent(sentenceId, element.textContent || "", "paragraph", entry.time, event_type)
-      this.eventData.events.push(event)
+      if (this.firstStartEventReceived) {
+        console.log(eventType)
+        const event = new SentenceEvent(sentenceId, element.textContent || "", "paragraph", entry.time, eventType)
+        this.eventData.events.push(event)
+      }
+
     })
   }
 

@@ -11,4 +11,9 @@ export class EventdataService {
 
   constructor() {
   }
+
+  clearData() {
+    this.events = []
+    this.sentenceNumber = 0;
+  }
 }

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ReadArticleComponent } from './read-article.component';
+import { Article1Component } from './article1.component';
 
 describe('ReadArticleComponent', () => {
-  let component: ReadArticleComponent;
-  let fixture: ComponentFixture<ReadArticleComponent>;
+  let component: Article1Component;
+  let fixture: ComponentFixture<Article1Component>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ReadArticleComponent ]
+      declarations: [ Article1Component ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ReadArticleComponent);
+    fixture = TestBed.createComponent(Article1Component);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
