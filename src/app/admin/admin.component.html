@@ -4,19 +4,19 @@
     <h2 class="mb-10">Overall</h2>
     <ul>
       <li *ngFor="let read of reads | slice:0:1" [ngClass]="{'bg-blue-500 text-gray-200': currentRead == read.id}"
-          class="border list-none rounded-sm  mb-5 w-9/12 cursor-pointer hover:bg-green-300 focus-visible:font-black"
+          class="border list-none rounded-sm  mb-5 w-9/12 cursor-pointer hover:bg-green-300 hover:text-gray-900 focus-visible:font-black"
           (click)="openRead(read.id)">
         <div class="h-1 relative overflow-hidden">
           <div class="w-full h-full bg-gray-200 absolute"></div>
           <div class="h-full bg-green-300 absolute" [ngStyle]="{width: '40%'}"></div>
         </div>
-        <div class="px-3 py-3">Artikel - Preiskampf Schnelltests Overall</div>
+        <div class="px-3 py-3">Preiskampf Schnelltests - Overall</div>
       </li>
     </ul>
     <h2 class="mb-10">Single Reads</h2>
     <ul>
       <li *ngFor="let read of reads | slice:1" [ngClass]="{'bg-blue-500 text-gray-200': currentRead == read.id}"
-          class="border list-none rounded-sm  mb-5 w-9/12 cursor-pointer hover:bg-green-300 focus-visible:font-black"
+          class="border list-none rounded-sm  mb-5 w-9/12 cursor-pointer hover:bg-green-300 hover:text-gray-900 focus-visible:font-black"
           (click)="openRead(read.id)">
         <div class="h-1 relative overflow-hidden">
           <div class="w-full h-full bg-gray-200 absolute"></div>

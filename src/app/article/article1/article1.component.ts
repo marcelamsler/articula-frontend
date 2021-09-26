@@ -1,7 +1,7 @@
 import {
   AfterViewInit,
   Component,
-  ElementRef, OnInit,
+  ElementRef, Inject, OnInit,
   QueryList,
   ViewChildren
 } from '@angular/core';
@@ -11,6 +11,7 @@ import {UUID} from 'angular2-uuid';
 import {SentenceEvent} from "../sentence-event";
 import {ArticleService} from "../../article.service";
 import {EventdataService} from "../../eventdata.service";
+import {DOCUMENT} from "@angular/common";
 
 @Component({
   selector: 'article1',
@@ -22,7 +23,7 @@ export class Article1Component implements OnInit, AfterViewInit {
 
   private startTime: number = 0;
 
-  constructor(private eventDataService: EventdataService, private articleService: ArticleService) {
+  constructor(@Inject(DOCUMENT) private document: Document, private eventDataService: EventdataService, private articleService: ArticleService) {
 
   }
 
@@ -59,11 +60,8 @@ export class Article1Component implements OnInit, AfterViewInit {
       this.articleService.sendRead(read).subscribe(() => {
         console.log("data-sent")
         this.eventDataService.clearData()
+        this.document.location.href = 'https://srf.ch'
       });
-      //read.events.forEach(value => {
-      //console.log(value.sentence, value.type)
-      //})
-
     }
   }
 }
